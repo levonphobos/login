@@ -14,6 +14,9 @@ $password = $_POST['password'];
 $filename = $_FILES['photo']['name'];
 
 $target_dir = "uploads/";
+if(!is_dir($target_dir)){
+    mkdir($target_dir, 0777, true);
+}
 $target_file = $target_dir . basename($filename);
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
