@@ -1,0 +1,88 @@
+.photo_block {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+}
+
+.photo_block > div:first-child {
+    position: absolute;
+    bottom: 5px;
+    left: 40px;
+    text-align: center;
+}
+
+.photo_block > div:first-child > img {
+    width: 160px;
+}
+
+.photo_block > div h4 {
+    text-align: center;
+}
+
+.logout_btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.logout_btn a {
+    color: white;
+}
+
+.cover_inp + input {
+    display: none;
+}
+
+.cover_inp {
+    cursor: pointer;
+}
+
+.cover_inp img {
+    width: 80px;
+}
+
+.cover_photo_upload_form {
+    text-align: center;
+    padding-top: 140px;
+}
+
+.preview_img{
+    left: 0;
+    z-index: -11111;
+    position: absolute;
+    display: none;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.save_btn{
+    display: inline;
+    position: absolute;
+    bottom: 22px;
+    right: 15px;
+}
+
+.edit-del{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px;
+}
+
+.edit-del label,
+.edit-del button {
+    border: none;
+    font-size: 25px;
+    background: none;
+}
+
+.edit-del label{
+    color: green;
+}
+
+.edit-del > button{
+    color: red;
+}

@@ -34,7 +34,7 @@ session_start();
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <h5><a href="register.php">Register Now</a></h5>
-            <h5><?php echo $_SESSION['error'] ?></h5>
+            <h5><?php if(isset($_SESSION['error'])){echo $_SESSION['error'];} ?></h5>
         </div>
     </div>
 </div>

@@ -38,7 +38,7 @@ session_start();
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
-            <h3><?php echo $_SESSION['message'] ?></h3>
+            <h3><?php if(isset($_SESSION['message'])){echo $_SESSION['message'];} ?></h3>
         </div>
     </div>
 </div>
