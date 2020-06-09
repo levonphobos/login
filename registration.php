@@ -1,61 +1,66 @@
 <?php
 
 session_start();
-$_SESSION['message'] = '';
+
+?>
 
 
-$conn = new mysqli('localhost', 'root', '', 'user_login');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Document</title>
 
-$username = $_POST['username'];
-$password = $_POST['password'];
-$password = md5($password);
-$filename = $_FILES['photo']['name'];
-
-$target_dir = "uploads/";
-if(!is_dir($target_dir)){
-    mkdir($target_dir, 0777, true);
-}
-$target_file = $target_dir . basename($filename);
-$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file);
-
-$sql = "INSERT INTO user (username, password, photo)
-VALUES ('$username', '$password', '$filename')";
-
-if ($conn->query($sql) === TRUE) {
-    $_SESSION['error'] = '';
-    $_SESSION['message'] = "";
-    $sql = "SELECT * FROM user WHERE username='$username' && password='$password'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $_SESSION['username'] = $row["username"];
-            $_SESSION['photo'] = $row["photo"];
-            $_SESSION['user_id'] = $row["id"];
+    <style>
+        .upload-img {
+            display: none;
         }
 
-        $user_id = $row["id"];
-
-        $sql = "SELECT name FROM cover_photo WHERE user_id='$user_id'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $_SESSION['cover_photo'] = $row["name"];
-            }
-        } else {
-            $_SESSION['cover_photo'] = '';
+        .preview-img {
+            margin: -10px 0 0 50px;
+            width: 50px;
+            display: none;
         }
-    }
-    header('location:home.php');
-} else {
-    $_SESSION['message'] = "Registration Failed";
-    header('location:register.php');
-}
+    </style>
+</head>
+<body>
 
-$conn->close();
+<!--Register-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 pt-5">
+            <h2>Registration</h2>
+            <form method="post" action="database.php" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           name="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlFile1" class="btn btn-success">Upload Photo</label>
+                    <input onchange="previewProfilePhoto()" type="file" class="form-control-file upload-img" id="exampleFormControlFile1" name="register-photo"
+                           required>
+                    <img id="profile-img-preview" src="" alt="Your Image" class="img-thumbnail preview-img"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <h3><?php if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                } ?></h3>
+        </div>
+    </div>
+</div>
+
+<!--Register-->
+
+<script src="js/script.js"></script>
+</body>
+</html>

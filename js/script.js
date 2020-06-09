@@ -36,7 +36,7 @@ function hide() {
 }
 
 function remove(user_id) {
-    fetch('delete.php',{
+    fetch('database.php',{
         method:'post',
         body:user_id
     }).then(response => {
