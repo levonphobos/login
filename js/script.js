@@ -46,3 +46,17 @@ function remove(user_id) {
         return error;
     })
 }
+
+function previewProfilePhoto(){
+    let img = document.getElementById('profile-img-preview');
+    let file = document.getElementById('exampleFormControlFile1').files;
+    if (file.length > 0) {
+        let fileReader = new FileReader();
+        fileReader.onload = e => {
+            img.setAttribute('src', String(e.target.result));
+            img.style.display = 'inline';
+        };
+
+        fileReader.readAsDataURL(file[0]);
+    }
+}
