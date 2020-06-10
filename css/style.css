@@ -79,10 +79,20 @@
     background: none;
 }
 
+.edit-del button:focus{
+    outline: none;
+}
+
 .edit-del label{
     color: green;
 }
 
 .edit-del > button{
     color: red;
+}
+
+.delete-btn{
+    cursor: pointer!important;
+    display: inline-block;
+    margin:5px 0 0 10px;
 }

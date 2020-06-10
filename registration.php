@@ -34,7 +34,7 @@ session_start();
     <div class="row justify-content-center">
         <div class="col-md-4 pt-5">
             <h2>Registration</h2>
-            <form method="post" action="database.php" enctype="multipart/form-data">
+            <form method="post" action="database1.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -52,8 +52,8 @@ session_start();
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
-            <h3><?php if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+            <h3><?php if (isset($_SESSION['reg-error'])) {
+                    echo $_SESSION['reg-error'];
                 } ?></h3>
         </div>
     </div>
