@@ -26,7 +26,7 @@ if (!$_SESSION['user_id']) {
     </div>
     <?php if (!$_SESSION['cover-photo']) {
         echo '
-        <form method="post" action="database1.php" id="form" enctype="multipart/form-data" class="cover_photo_upload_form">
+        <form method="post" action="database.php" id="form" enctype="multipart/form-data" class="cover_photo_upload_form">
         <label for="cover" class="cover_inp" title="Upload Cover Photo"><img src="images/add.png" alt="Add"></label>
         <input id="cover" type="file" name="add-cover" required onchange="previewImage(this.id)">
     </form>
@@ -48,7 +48,7 @@ if (!$_SESSION['user_id']) {
     <?php if ($_SESSION['cover-photo']) {
 
         echo '<div id="edit_del" class="edit-del">
-        <form action="database1.php" method="post" enctype="multipart/form-data" id="edit_form" style="display: inline;">
+        <form action="database.php" method="post" enctype="multipart/form-data" id="edit_form" style="display: inline;">
             <label for="edit" style="cursor: pointer;"><i class="far fa-edit"></i></label>
             <input type="file" id="edit" name="edit-cover" style="display: none;" onchange="previewImageEdit(this.id)">
         </form>
@@ -85,7 +85,7 @@ if (!$_SESSION['user_id']) {
                 Are you sure you want to delete your cover photo?
             </div>
             <div class="modal-footer">
-                <form action="database1.php" method="post" enctype="multipart/form-data" style="display: inline;">
+                <form action="database.php" method="post" enctype="multipart/form-data" style="display: inline;">
                     <button type="submit" name="delete-cover" class="btn btn-primary">Delete</button>
                 </form>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
