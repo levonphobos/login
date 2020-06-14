@@ -36,7 +36,7 @@ function hide() {
 }
 
 function remove(user_id) {
-    fetch('database.php',{
+    fetch('request.php',{
         method:'post',
         body:user_id
     }).then(response => {
@@ -46,6 +46,7 @@ function remove(user_id) {
         return error;
     })
 }
+
 
 function previewProfilePhoto(){
     let img = document.getElementById('profile-img-preview');

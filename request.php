@@ -2,8 +2,10 @@
 session_start();
 require_once 'classes/User.php';
 require_once 'classes/CoverPhoto.php';
+require_once 'classes/UserPost.php';
 
 $_SESSION['login-error'] = "";
+//$_SESSION['posts'] = [];
 
 switch ($_SERVER["REQUEST_METHOD"] == "POST"){
     case (isset($_POST['register-username']) && isset($_FILES['register-photo']['name']) && isset($_POST['register-password'])):
@@ -58,6 +60,13 @@ switch ($_SERVER["REQUEST_METHOD"] == "POST"){
             } else {
                 $_SESSION['cover-photo'] = '';
             }
+            $userPost = new UserPost();
+            $userPost->getPosts($data);
+            if ($_SESSION['select-result']->num_rows > 0) {
+                $_SESSION['posts'] = $_SESSION['select-result']->fetch_all();
+            } else {
+                $_SESSION['posts'] = [];
+            }
             header('location:home.php');
         } else {
             $_SESSION['login-error'] = "Login Failed";
@@ -97,4 +106,37 @@ switch ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         header("location:home.php");
         break;
+
+    case(isset($_POST['user-post'])):
+        $userPost = new UserPost();
+        $data = array('content' => $_POST['user-post'], 'user_id' => $_SESSION['user_id']);
+        if($userPost->save($data)){
+            $data = array('user_id' => $_SESSION['user_id']);
+            $userPost->getPosts($data);
+                if ($_SESSION['select-result']->num_rows > 0) {
+                    $_SESSION['posts'] = $_SESSION['select-result']->fetch_all();
+                } else {
+                    $_SESSION['posts'] = [];
+                }
+        }
+        header("location:home.php");
+        break;
+
+    case(isset($_POST)):
+        foreach($_POST as $key => $value) {
+            if (preg_match('/post-delete/i', $key)) {
+                $data = array('id' => $value);
+                $userPost = new UserPost();
+                if($userPost->remove($data)){
+                    $data = array('user_id' => $_SESSION['user_id']);
+                    $userPost->getPosts($data);
+                    if ($_SESSION['select-result']->num_rows > 0) {
+                        $_SESSION['posts'] = $_SESSION['select-result']->fetch_all();
+                    } else {
+                        $_SESSION['posts'] = [];
+                    }
+                }
+            }
+        }
+        header("location:home.php");
 }

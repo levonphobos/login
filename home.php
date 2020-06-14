@@ -26,7 +26,7 @@ if (!$_SESSION['user_id']) {
     </div>
     <?php if (!$_SESSION['cover-photo']) {
         echo '
-        <form method="post" action="database.php" id="form" enctype="multipart/form-data" class="cover_photo_upload_form">
+        <form method="post" action="request.php" id="form" enctype="multipart/form-data" class="cover_photo_upload_form">
         <label for="cover" class="cover_inp" title="Upload Cover Photo"><img src="images/add.png" alt="Add"></label>
         <input id="cover" type="file" name="add-cover" required onchange="previewImage(this.id)">
     </form>
@@ -48,7 +48,7 @@ if (!$_SESSION['user_id']) {
     <?php if ($_SESSION['cover-photo']) {
 
         echo '<div id="edit_del" class="edit-del">
-        <form action="database.php" method="post" enctype="multipart/form-data" id="edit_form" style="display: inline;">
+        <form action="request.php" method="post" enctype="multipart/form-data" id="edit_form" style="display: inline;">
             <label for="edit" style="cursor: pointer;"><i class="far fa-edit"></i></label>
             <input type="file" id="edit" name="edit-cover" style="display: none;" onchange="previewImageEdit(this.id)">
         </form>
@@ -70,6 +70,42 @@ if (!$_SESSION['user_id']) {
     <a href="logout.php">Logout</a>
 </button>
 
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" action="request.php" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Write Your Post</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                              name="user-post"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-primary float-right">Post</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8 pt-5">
+            <?php if ($_SESSION['posts']) {
+                foreach ($_SESSION['posts'] as $value) {
+                    echo '
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <span>' . $value[1] . '</span>
+                                <strong class="float-right">' . $value[2] . '</strong>
+                                <form action="request.php" enctype="multipart/form-data" method="post" class="d-inline">
+                                <button type="submit"
+                                    name="post-delete-'.$value[0].'" class="close" value="'.$value[0].'">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </form>
+                    </div>
+                    ';
+                }
+            }
+            ?>
+        </div>
+    </div>
+</div>
+<br><br><br>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -85,7 +121,7 @@ if (!$_SESSION['user_id']) {
                 Are you sure you want to delete your cover photo?
             </div>
             <div class="modal-footer">
-                <form action="database.php" method="post" enctype="multipart/form-data" style="display: inline;">
+                <form action="request.php" method="post" enctype="multipart/form-data" style="display: inline;">
                     <button type="submit" name="delete-cover" class="btn btn-primary">Delete</button>
                 </form>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
