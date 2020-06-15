@@ -5,7 +5,6 @@ require_once 'classes/CoverPhoto.php';
 require_once 'classes/UserPost.php';
 
 $_SESSION['login-error'] = "";
-//$_SESSION['posts'] = [];
 
 switch ($_SERVER["REQUEST_METHOD"] == "POST"){
     case (isset($_POST['register-username']) && isset($_FILES['register-photo']['name']) && isset($_POST['register-password'])):
