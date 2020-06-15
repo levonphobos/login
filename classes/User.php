@@ -19,4 +19,14 @@ class User extends DbTable
     {
         $this->select($data);
     }
+
+    function edit($values, $keys){
+        if ($this->update($values, $keys)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

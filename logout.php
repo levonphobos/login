@@ -1,4 +1,5 @@
 <?php
-session_start();
-session_destroy();
+require_once 'classes/Session.php';
+Session::start();
+Session::destroy();
 header('location:index.php');

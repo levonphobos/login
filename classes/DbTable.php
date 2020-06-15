@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Database.php';
+require_once 'Session.php';
 
 
 class DbTable extends Database
@@ -28,13 +29,14 @@ class DbTable extends Database
 
         $sql = "SELECT * FROM $this->table WHERE {$condition}";
         if ($this->conn->query($sql)) {
-            $_SESSION['select-result'] = $this->conn->query($sql);
+            $row = $this->conn->query($sql);
+            Session::set('select_result', $row);
         } else {
-            $_SESSION['select-result'] = '';
+            Session::set('select_result', '');
         }
     }
 
-    protected function update($values, $ids)
+    protected function update($values, $keys)
     {
         $valueSets = array();
         foreach ($values as $key => $value) {
@@ -42,7 +44,7 @@ class DbTable extends Database
         }
 
         $conditionSets = array();
-        foreach ($ids as $key => $value) {
+        foreach ($keys as $key => $value) {
             $conditionSets[] = $key . " = '" . $value . "'";
         }
 

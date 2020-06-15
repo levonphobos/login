@@ -1,5 +1,6 @@
 <?php
-session_start();
+require 'classes/Session.php';
+Session::start();
 if (!$_SESSION['user_id']) {
     header('location:index.php');
 }
@@ -21,10 +22,10 @@ if (!$_SESSION['user_id']) {
 
 <div class="photo_block">
     <div>
-        <img src="uploads/<?php echo $_SESSION['photo'] ?>" class="img-thumbnail" alt="Profile Picture">
-        <h4><?php echo $_SESSION['name'] ?></h4>
+        <img src="uploads/<?php echo Session::get('photo') ?>" class="img-thumbnail" alt="Profile Picture">
+        <h4><?php echo Session::get('name') ?></h4>
     </div>
-    <?php if (!$_SESSION['cover-photo']) {
+    <?php if (!Session::get('cover-photo')) {
         echo '
         <form method="post" action="request.php" id="form" enctype="multipart/form-data" class="cover_photo_upload_form">
         <label for="cover" class="cover_inp" title="Upload Cover Photo"><img src="images/add.png" alt="Add"></label>
@@ -41,11 +42,11 @@ if (!$_SESSION['user_id']) {
     <img src="" id="previewEdit" class="img-thumbnail preview_img" alt="preview">
 
 
-    <?php if ($_SESSION['cover-photo']) {
-        echo '<img id="user_cover_photo" src="uploads/' . $_SESSION['cover-photo'] . '" class="img-thumbnail" style="width:100%;" alt="Profile Picture">';
+    <?php if (Session::get('cover-photo')) {
+        echo '<img id="user_cover_photo" src="uploads/' . Session::get('cover-photo') . '" class="img-thumbnail" style="width:100%;" alt="Profile Picture">';
     } ?>
 
-    <?php if ($_SESSION['cover-photo']) {
+    <?php if (Session::get('cover-photo')) {
 
         echo '<div id="edit_del" class="edit-del">
         <form action="request.php" method="post" enctype="multipart/form-data" id="edit_form" style="display: inline;">
@@ -85,8 +86,8 @@ if (!$_SESSION['user_id']) {
             </form>
         </div>
         <div class="col-md-8 pt-5">
-            <?php if ($_SESSION['posts']) {
-                foreach ($_SESSION['posts'] as $value) {
+            <?php if (Session::get('posts')) {
+                foreach (Session::get('posts') as $value) {
                     echo '
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
                             <span>' . $value[1] . '</span>

@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require 'classes/Session.php';
+Session::start();
 
 ?>
 
@@ -15,7 +16,6 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-
 <!--Login-->
 <div class="container">
     <div class="row justify-content-center">
@@ -38,9 +38,15 @@ session_start();
             <button type="button" class="btn btn-link pl-0" data-toggle="modal" data-target="#exampleModal">
                 Forget Password
             </button>
-            <h5><?php if (isset($_SESSION['login-error'])) {
-                    echo $_SESSION['login-error'];
-                } ?></h5>
+            <h5><?php
+                if (Session::get('login-error')) {
+                    echo Session::get('login-error');
+                }
+
+                if(Session::get('send-mail-response')){
+                    echo Session::get('send-mail-response');
+                }
+                ?></h5>
         </div>
     </div>
 </div>
@@ -63,13 +69,11 @@ session_start();
                 <form action="sendMail.php" autocomplete="on" enctype="multipart/form-data" method="post" id="send-mail-form">
                     <label for="exampleInputEmail2">Email address</label>
                     <input type="email" class="form-control" name="send-email" id="exampleInputEmail2" aria-describedby="emailHelp">
-                    <label for="exampleFormControlTextarea2">Example textarea</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea2" name="send-textarea" rows="3"></textarea>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" form="send-mail-form" class="btn btn-primary">Send</button>
+                <button type="submit" form="send-mail-form" class="btn btn-primary">Send Mail</button>
             </div>
         </div>
     </div>
