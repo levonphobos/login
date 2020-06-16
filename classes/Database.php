@@ -3,6 +3,15 @@
 class Database
 {
     public object $conn;
+    private static $instance;
+
+    static function getDbClass(): Database {
+        if(self::$instance === null){
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
     function __construct()
     {

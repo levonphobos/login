@@ -7,12 +7,14 @@ require_once 'Session.php';
 class DbTable extends Database
 {
     protected string $table;
+    private $db;
 
     protected function insert($data)
     {
+        $this->db = Database::getDbClass();
         $sql = "INSERT INTO $this->table (" . implode(", ", array_keys($data)) . ") 
         VALUES('" . implode("', '", array_values($data)) . "')";
-        if ($this->conn->query($sql)) {
+        if ($this->db->conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -22,14 +24,15 @@ class DbTable extends Database
     protected function select($data)
     {
         $condition = array();
+        $this->db = Database::getDbClass();
         foreach ($data as $key => $value) {
             $condition[] = "{$key} = '{$value}'";
         }
         $condition = join(' AND ', $condition);
 
         $sql = "SELECT * FROM $this->table WHERE {$condition}";
-        if ($this->conn->query($sql)) {
-            $row = $this->conn->query($sql);
+        if ($this->db->conn->query($sql)) {
+            $row = $this->db->conn->query($sql);
             Session::set('select_result', $row);
         } else {
             Session::set('select_result', '');
@@ -39,6 +42,7 @@ class DbTable extends Database
     protected function update($values, $keys)
     {
         $valueSets = array();
+        $this->db = Database::getDbClass();
         foreach ($values as $key => $value) {
             $valueSets[] = $key . " = '" . $value . "'";
         }
@@ -50,7 +54,7 @@ class DbTable extends Database
 
         $sql = "UPDATE $this->table SET " . join(",", $valueSets) . " WHERE " . join(" AND ", $conditionSets);
 
-        if ($this->conn->query($sql)) {
+        if ($this->db->conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -60,13 +64,14 @@ class DbTable extends Database
     protected function delete($data)
     {
         $condition = array();
+        $this->db = Database::getDbClass();
         foreach ($data as $key => $value) {
             $condition[] = "{$key} = '{$value}'";
         }
 
         $condition = join(' AND ', $condition);
         $sql = "DELETE FROM $this->table WHERE {$condition}";
-        if ($this->conn->query($sql)) {
+        if ($this->db->conn->query($sql)) {
             return true;
         } else {
             return false;
