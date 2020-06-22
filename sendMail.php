@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $url = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/resetPassword.php?code=$code";
     $txt = '
 <h3>
-You Requested a password reset
+You are requested a password reset
 </h3>
 <p>Click <a href="'.$url.'">this link</a> to do so</p>
 ';
